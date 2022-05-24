@@ -7,39 +7,46 @@ const Header = () => (
 );
 
 const Statistics = (props) => {
-  return (
-    <div>
-      <h1>statistics</h1>
-      <div>good {props.valueArray[0]}</div>
-      <div>neutral {props.valueArray[0]}</div>
-      <div>bad {props.valueArray[0]}</div>
+  if (props.valueArray[0] + props.valueArray[1] + props.valueArray[2] === 0)
+    return (
+      <>
+        <h1>statistics</h1>
+        <div>No feedback given</div>
+      </>
+    );
+  else
+    return (
       <div>
-        all {props.valueArray[0] + props.valueArray[1] + props.valueArray[2]}
+        <h1>statistics</h1>
+        <div>good {props.valueArray[0]}</div>
+        <div>neutral {props.valueArray[0]}</div>
+        <div>bad {props.valueArray[0]}</div>
+        <div>
+          all {props.valueArray[0] + props.valueArray[1] + props.valueArray[2]}
+        </div>
+        <div>
+          average{" "}
+          {(props.valueArray[0] * 1 +
+            props.valueArray[1] * 0 +
+            props.valueArray[2] * -1) /
+            (props.valueArray[0] + props.valueArray[1] + props.valueArray[2])}
+        </div>
+        <div>
+          positive{" "}
+          {(props.valueArray[0] /
+            (props.valueArray[0] + props.valueArray[1] + props.valueArray[2])) *
+            100}{" "}
+          %
+        </div>
       </div>
-      <div>
-        average{" "}
-        {(props.valueArray[0] * 1 +
-          props.valueArray[1] * 0 +
-          props.valueArray[2] * -1) /
-          (props.valueArray[0] + props.valueArray[1] + props.valueArray[2])}
-      </div>
-      <div>
-        positive{" "}
-        {(props.valueArray[0] /
-          (props.valueArray[0] + props.valueArray[1] + props.valueArray[2])) *
-          100}{" "}
-        %
-      </div>
-    </div>
-  );
+    );
 };
 
 const Button = (props) => (
   <button onClick={props.handleClick}>{props.text}</button>
 );
 
-{
-  /*
+/*
 const DisplayGood = (props) => <div>good {props.value}</div>;
 const DisplayNeutral = (props) => <div>neutral {props.value}</div>;
 const DisplayBad = (props) => <div>bad {props.value}</div>;
@@ -74,7 +81,6 @@ const DisplayPositive = (props) => {
 };
 
 */
-}
 
 const App = () => {
   // tallenna napit omaan tilaansa
