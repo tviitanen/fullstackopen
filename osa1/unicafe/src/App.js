@@ -1,86 +1,37 @@
 import { useState } from "react";
 
-const Header = () => (
-  <div>
-    <h1>give feedback</h1>
-  </div>
+const Statistics = ({ good, neutral, bad }) => {
+  const all = good + neutral + bad;
+  const average = RoundToTwo((good * 1 + neutral * 0 + bad * -1) / all);
+  const positive = RoundToTwo((good / all) * 100);
+
+  if (all === 0) return <div>No feedback given</div>;
+  return (
+    <table>
+      <tbody>
+        <StatisticLine text="good" value={good} />
+        <StatisticLine text="neutral" value={neutral} />
+        <StatisticLine text="good" value={bad} />
+        <StatisticLine text="all" value={all} />
+        <StatisticLine text="average" value={average} />
+        <StatisticLine text="positive" value={positive + " %"} />
+      </tbody>
+    </table>
+  );
+};
+
+const StatisticLine = ({ text, value }) => (
+  <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+  </tr>
 );
 
-const Statistics = (props) => {
-  if (props.valueArray[0] + props.valueArray[1] + props.valueArray[2] === 0)
-    return (
-      <>
-        <h1>statistics</h1>
-        <div>No feedback given</div>
-      </>
-    );
-  else
-    return (
-      <div>
-        <h1>statistics</h1>
-        <div>good {props.valueArray[0]}</div>
-        <div>neutral {props.valueArray[0]}</div>
-        <div>bad {props.valueArray[0]}</div>
-        <div>
-          all {props.valueArray[0] + props.valueArray[1] + props.valueArray[2]}
-        </div>
-        <div>
-          average{" "}
-          {(props.valueArray[0] * 1 +
-            props.valueArray[1] * 0 +
-            props.valueArray[2] * -1) /
-            (props.valueArray[0] + props.valueArray[1] + props.valueArray[2])}
-        </div>
-        <div>
-          positive{" "}
-          {(props.valueArray[0] /
-            (props.valueArray[0] + props.valueArray[1] + props.valueArray[2])) *
-            100}{" "}
-          %
-        </div>
-      </div>
-    );
-};
+const RoundToTwo = (num) => Math.round((num + Number.EPSILON) * 100) / 100;
 
 const Button = (props) => (
   <button onClick={props.handleClick}>{props.text}</button>
 );
-
-/*
-const DisplayGood = (props) => <div>good {props.value}</div>;
-const DisplayNeutral = (props) => <div>neutral {props.value}</div>;
-const DisplayBad = (props) => <div>bad {props.value}</div>;
-const DisplayAll = (props) => {
-  return (
-    <div>
-      all {props.valueArray[0] + props.valueArray[1] + props.valueArray[2]}{" "}
-    </div>
-  );
-};
-const DisplayAverage = (props) => {
-  return (
-    <div>
-      average{" "}
-      {(props.valueArray[0] * 1 +
-        props.valueArray[1] * 0 +
-        props.valueArray[2] * -1) /
-        (props.valueArray[0] + props.valueArray[1] + props.valueArray[2])}
-    </div>
-  );
-};
-const DisplayPositive = (props) => {
-  return (
-    <div>
-      positive{" "}
-      {(props.valueArray[0] /
-        (props.valueArray[0] + props.valueArray[1] + props.valueArray[2])) *
-        100}{" "}
-      %
-    </div>
-  );
-};
-
-*/
 
 const App = () => {
   // tallenna napit omaan tilaansa
@@ -102,19 +53,12 @@ const App = () => {
   };
   return (
     <div>
-      <Header />
+      <h1>give feedback</h1>
       <Button handleClick={() => setToGood(good + 1)} text="good" />
       <Button handleClick={() => setToNeutral(neutral + 1)} text="neutral" />
       <Button handleClick={() => setToBad(bad + 1)} text="bad" />
-      <Statistics valueArray={[good, neutral, bad]} />
-      {/*
-      <DisplayGood value={good} />
-      <DisplayNeutral value={neutral} />
-      <DisplayBad value={bad} />
-      <DisplayAll valueArray={[good, neutral, bad]} />
-      <DisplayAverage valueArray={[good, neutral, bad]} />
-      <DisplayPositive valueArray={[good, neutral, bad]} />
-  */}
+      <h1>statistics</h1>
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   );
 };
