@@ -6,15 +6,40 @@ const Header = () => (
   </div>
 );
 
-const Statistics = () => (
-  <div>
-    <h1>statistics</h1>
-  </div>
-);
+const Statistics = (props) => {
+  return (
+    <div>
+      <h1>statistics</h1>
+      <div>good {props.valueArray[0]}</div>
+      <div>neutral {props.valueArray[0]}</div>
+      <div>bad {props.valueArray[0]}</div>
+      <div>
+        all {props.valueArray[0] + props.valueArray[1] + props.valueArray[2]}
+      </div>
+      <div>
+        average{" "}
+        {(props.valueArray[0] * 1 +
+          props.valueArray[1] * 0 +
+          props.valueArray[2] * -1) /
+          (props.valueArray[0] + props.valueArray[1] + props.valueArray[2])}
+      </div>
+      <div>
+        positive{" "}
+        {(props.valueArray[0] /
+          (props.valueArray[0] + props.valueArray[1] + props.valueArray[2])) *
+          100}{" "}
+        %
+      </div>
+    </div>
+  );
+};
 
 const Button = (props) => (
   <button onClick={props.handleClick}>{props.text}</button>
 );
+
+{
+  /*
 const DisplayGood = (props) => <div>good {props.value}</div>;
 const DisplayNeutral = (props) => <div>neutral {props.value}</div>;
 const DisplayBad = (props) => <div>bad {props.value}</div>;
@@ -47,6 +72,10 @@ const DisplayPositive = (props) => {
     </div>
   );
 };
+
+*/
+}
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0);
@@ -71,13 +100,15 @@ const App = () => {
       <Button handleClick={() => setToGood(good + 1)} text="good" />
       <Button handleClick={() => setToNeutral(neutral + 1)} text="neutral" />
       <Button handleClick={() => setToBad(bad + 1)} text="bad" />
-      <Statistics />
+      <Statistics valueArray={[good, neutral, bad]} />
+      {/*
       <DisplayGood value={good} />
       <DisplayNeutral value={neutral} />
       <DisplayBad value={bad} />
       <DisplayAll valueArray={[good, neutral, bad]} />
       <DisplayAverage valueArray={[good, neutral, bad]} />
       <DisplayPositive valueArray={[good, neutral, bad]} />
+  */}
     </div>
   );
 };
