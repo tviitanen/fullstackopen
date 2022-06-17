@@ -3,7 +3,15 @@ import { useState } from "react";
 const Button = (props) => (
   <button onClick={props.handleClick}>{props.text}</button>
 );
+
 const RandomInt = () => Math.floor(Math.random() * 7);
+
+const Anecdote = ({ text, votes }) => (
+  <div>
+    <p>{text}</p>
+    <p>has {votes} votes</p>
+  </div>
+);
 
 const App = () => {
   const anecdotes = [
@@ -17,20 +25,30 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [voteArray, setVotes] = useState(new Uint8Array(7));
 
   const setToSelected = (newValue) => {
     setSelected(newValue);
   };
+
+  const vote = () => {
+    console.log(selected);
+    const copy = [...voteArray];
+    // kasvatetaan taulukon paikan n arvoa yhdellä
+    copy[selected] += 1;
+    setVotes(copy);
+    console.log(copy[selected]);
+  };
+
   return (
-    <>
-      <div>{anecdotes[selected]}</div>
-      <div>
-        <Button
-          handleClick={() => setToSelected(RandomInt)}
-          text="next anecdote"
-        />
-      </div>
-    </>
+    <div>
+      <Anecdote text={anecdotes[selected]} votes={voteArray[selected]} />
+      <Button handleClick={() => vote()} text="vote" />
+      <Button
+        handleClick={() => setToSelected(RandomInt)}
+        text="next anecdote"
+      />
+    </div>
   );
 };
 
